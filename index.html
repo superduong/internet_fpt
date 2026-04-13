@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lắp Internet FPT — 1000 Mbps | Nguyễn Quốc Truyền</title>
+  <meta name="description" content="Internet FPT 1000 Mbps từ 245.000₫/tháng. Combo Internet + Camera 299.000₫ + Ngoại hạng Anh. Lắp đặt toàn quốc — Hotline 0338 30 34 38." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #0a0608;
+      --bg-card: rgba(18, 12, 16, 0.75);
+      --fpt-orange: #ff6a00;
+      --fpt-red: #e31e24;
+      --accent-gold: #ffd24a;
+      --text: #f4f1ee;
+      --muted: rgba(244, 241, 238, 0.72);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --radius: 20px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Be Vietnam Pro", system-ui, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 0;
+    }
+
+    .glow-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .glow-orbs::before,
+    .glow-orbs::after {
+      content: "";
+      position: absolute;
+      width: min(90vw, 720px);
+      height: min(90vw, 720px);
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+    }
+    .glow-orbs::before {
+      background: radial-gradient(circle, #ff4500 0%, transparent 70%);
+      top: -10%;
+      right: -15%;
+    }
+    .glow-orbs::after {
+      background: radial-gradient(circle, #8b0000 0%, transparent 70%);
+      bottom: -20%;
+      left: -10%;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px 120px;
+    }
+
+    header.site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 8px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff6a00, #e31e24);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 8px 32px rgba(255, 106, 0, 0.35);
+    }
+    .brand-text strong { display: block; font-size: 15px; letter-spacing: 0.02em; }
+    .brand-text span { font-size: 12px; color: var(--muted); }
+
+    nav.top-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav.top-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.top-nav a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .pill-hotline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+    }
+    .pill-hotline a {
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+      padding: 32px 0 56px;
+    }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding-top: 8px; }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--fpt-orange), transparent);
+      border-radius: 2px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 4.2vw, 3.25rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    h1 .hl {
+      background: linear-gradient(90deg, #fff 0%, var(--accent-gold) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 52ch;
+      margin-bottom: 28px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--fpt-orange), #ff8533);
+      color: #1a0a00;
+      box-shadow: 0 12px 40px rgba(255, 106, 0, 0.4);
+    }
+    .btn-primary:hover { box-shadow: 0 16px 48px rgba(255, 106, 0, 0.5); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid var(--stroke);
+    }
+    .btn-zalo {
+      background: #0068ff;
+      color: #fff;
+      box-shadow: 0 12px 40px rgba(0, 104, 255, 0.35);
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .trust-row span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-gold); }
+
+    .hero-visual {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      background: linear-gradient(160deg, rgba(255, 106, 0, 0.15), transparent);
+    }
+    .hero-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+      vertical-align: middle;
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .speed-chip {
+      background: rgba(10, 6, 8, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 210, 74, 0.35);
+      padding: 12px 18px;
+      border-radius: 14px;
+    }
+    .speed-chip strong {
+      display: block;
+      font-size: 22px;
+      color: var(--accent-gold);
+      letter-spacing: -0.02em;
+    }
+    .speed-chip span { font-size: 12px; color: var(--muted); }
+
+    section { margin-top: 56px; }
+    .section-title {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+    .section-title h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section-title p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 780px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+
+    .price-card {
+      position: relative;
+      padding: 28px 24px 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+    .price-card.featured {
+      border-color: rgba(255, 210, 74, 0.45);
+      box-shadow: 0 0 0 1px rgba(255, 210, 74, 0.12) inset;
+    }
+    .price-card .tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 106, 0, 0.2);
+      color: var(--accent-gold);
+    }
+    .price-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+    .price {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      letter-spacing: -0.03em;
+      margin: 12px 0 8px;
+    }
+    .price small {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .price-card ul {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .price-card li {
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .price-card li::before {
+      content: "✓";
+      color: var(--accent-gold);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .promo-banner {
+      margin-top: 28px;
+      padding: 24px 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(120deg, rgba(227, 30, 36, 0.85), rgba(255, 106, 0, 0.75));
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--shadow);
+    }
+    .promo-banner h3 {
+      margin: 0 0 6px;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    .promo-banner p { margin: 0; font-size: 14px; opacity: 0.95; }
+    .promo-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .promo-pills span {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 960px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .gallery { grid-template-columns: 1fr; }
+    }
+    .gallery figure {
+      margin: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery figcaption {
+      padding: 10px 12px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .consultant {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 28px;
+      align-items: start;
+      margin-top: 48px;
+    }
+    @media (max-width: 880px) {
+      .consultant { grid-template-columns: 1fr; }
+    }
+
+    .info-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .info-card h3 { margin: 0 0 12px; font-size: 1.1rem; }
+    .info-card dl { margin: 0; }
+    .info-card dt {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+    .info-card dt:first-child { margin-top: 0; }
+    .info-card dd {
+      margin: 4px 0 0;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .info-card a { color: var(--accent-gold); text-decoration: none; }
+    .info-card a:hover { text-decoration: underline; }
+
+    .form-card {
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+    }
+    .form-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+    .form-card .sub {
+      margin: 0 0 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(255, 210, 74, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 210, 74, 0.12);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: -8px;
+      margin-bottom: 16px;
+    }
+
+    footer.site-footer {
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1px solid var(--stroke);
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, transparent, rgba(10, 6, 8, 0.92) 30%);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--stroke);
+    }
+    .sticky-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    .sticky-cta .btn {
+      flex: 1 1 auto;
+      min-width: 140px;
+      max-width: 220px;
+      padding: 12px 16px;
+      font-size: 14px;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(20, 120, 60, 0.95);
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 100;
+      max-width: 90vw;
+      text-align: center;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="glow-orbs" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">FPT</div>
+        <div class="brand-text">
+          <strong>Lắp internet toàn quốc</strong>
+          <span>Tư vấn &amp; lắp đặt — Nguyễn Quốc Truyền</span>
+        </div>
+      </div>
+      <nav class="top-nav" aria-label="Điều hướng chính">
+        <a href="#goi-cuoc">Gói cước</a>
+        <a href="#uu-dai">Ưu đãi</a>
+        <a href="#hinh-anh">Hình ảnh</a>
+        <a href="#dang-ky">Đăng ký</a>
+      </nav>
+      <div class="pill-hotline">
+        Hotline: <a href="tel:+84338303438">0338 30 34 38</a>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div>
+        <p class="eyebrow">FPT Telecom · Internet · FPT Play · Camera</p>
+        <h1>Internet <span class="hl">1000 Mbps</span> — Ổn định cả nhà, giải trí đỉnh cao</h1>
+        <p class="hero-lead">
+          Kênh bán hàng trực tuyến chính thức: lắp mới, chuyển mạng, combo Internet + Box FPT Play + Camera.
+          Hỗ trợ nhanh, minh bạch cước — tư vấn miễn phí.
+        </p>
+        <div class="hero-cta-row">
+          <a class="btn btn-primary" href="tel:+84971951929">Gọi ngay 0971 951 929</a>
+          <a class="btn btn-zalo" href="https://zalo.me/84971951929" target="_blank" rel="noopener noreferrer">Chat Zalo</a>
+          <a class="btn btn-ghost" href="#dang-ky">Đăng ký</a>
+        </div>
+        <div class="trust-row">
+          <span><span class="dot" aria-hidden="true"></span> Wi-Fi 6 · phủ sóng tối ưu</span>
+          <span><span class="dot" aria-hidden="true"></span> FPT Play 4K · Ngoại hạng Anh</span>
+          <span><span class="dot" aria-hidden="true"></span> Camera an ninh đồng bộ</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img
+          src="assets/z7707664506884_3586065e88058e094a4b43204e5b4be2-cc19d01b-9753-43f2-ab26-39e712970b5f.png"
+          alt="Internet tốc độ cao, Wi-Fi 6, FPT Play và trận bóng Ngoại hạng Anh"
+          width="800"
+          height="600"
+          loading="eager"
+        />
+        <div class="hero-badge">
+          <div class="speed-chip">
+            <strong>1000 Mbps</strong>
+            <span>Đường truyền fiber — độ trễ thấp</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="goi-cuoc" aria-labelledby="pricing-heading">
+      <div class="section-title">
+        <h2 id="pricing-heading">Gói cước nổi bật</h2>
+        <p>Chọn gói phù hợp — nâng cấp trải nghiệm giải trí &amp; an ninh cho gia đình.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <h3>Internet Fiber</h3>
+          <p class="price">245.000₫ <small>/ tháng</small></p>
+          <p style="margin:0;font-size:14px;color:var(--muted)">Tốc độ tải xuống lên đến <strong style="color:var(--text)">1000 Mbps</strong> — phù hợp làm việc, học online, streaming 4K.</p>
+          <ul>
+            <li>Ổn định, độ trễ thấp cho game &amp; họp video</li>
+            <li>Router Wi-Fi 6 (theo chính sách vùng)</li>
+            <li>Lắp đặt &amp; chuyển mạng hỗ trợ tận nơi</li>
+          </ul>
+        </article>
+        <article class="price-card featured">
+          <span class="tag">Ưu đãi combo</span>
+          <h3>Internet + Camera</h3>
+          <p class="price">299.000₫ <small>/ tháng</small></p>
+          <p style="margin:0;font-size:14px;color:var(--muted)">Gói combo: mạnh mẽ cho nhà thông minh — <strong style="color:var(--text)">xem độc quyền Ngoại hạng Anh</strong> trên nền tảng FPT Play (theo điều kiện gói).</p>
+          <ul>
+            <li>Internet tốc độ cao + camera đồng bộ hệ sinh thái FPT</li>
+            <li>Ưu tiên tư vấn lắp đặt gói giải trí &amp; thể thao</li>
+            <li>Phù hợp gia đình cần an ninh &amp; giải trí</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="promo-banner" id="uu-dai">
+        <div>
+          <h3>Ưu đãi thanh toán trước</h3>
+          <p>Giảm gánh nặng cước hàng tháng — nhận thêm thời gian sử dụng.</p>
+        </div>
+        <div class="promo-pills" role="list">
+          <span role="listitem">6 tháng tặng 1</span>
+          <span role="listitem">12 tháng tặng 2</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="hinh-anh" aria-labelledby="gallery-heading">
+      <div class="section-title">
+        <h2 id="gallery-heading">Trải nghiệm FPT tại gia</h2>
+        <p>Hình ảnh minh họa: tốc độ, giải trí, camera an ninh — phong cách sống hiện đại.</p>
+      </div>
+      <div class="gallery">
+        <figure>
+          <img src="assets/z7707664460574_b56ef2231b990afde64a6cfdfb06a2cb-28b4f22c-3cdd-4295-acb3-e61f21b2161a.png" alt="Gia đình dùng FPT Play trên TV" loading="lazy" width="400" height="180" />
+          <figcaption>Phủ sóng mạnh — giải trí trên TV lớn.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/z7707664473996_8ced25559b92bd4840afb73b6d212ece-9c743130-9d68-428d-aa75-bf00ba0cacb6.png" alt="Ưu đãi tặng camera, truyền hình, học tập, Ngoại hạng Anh" loading="lazy" width="400" height="180" />
+          <figcaption>Nhiều quyền lợi kèm gói — camera, học tập, thể thao.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/z7707664487733_086c825a0118c31dc2a052f2d887a1de-953185a8-21e3-4339-841a-6657a38be553.png" alt="Wi-Fi tốc độ cao và thiết bị FPT" loading="lazy" width="400" height="180" />
+          <figcaption>Wi-Fi cao tốc — router &amp; trải nghiệm ổn định.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/z7707664506884_3586065e88058e094a4b43204e5b4be2-cc19d01b-9753-43f2-ab26-39e712970b5f.png" alt="Router Wi-Fi 6 và FPT Play" loading="lazy" width="400" height="180" />
+          <figcaption>Thiết bị hiện đại — sẵn sàng cho 4K &amp; game.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="consultant" id="dang-ky">
+      <div class="info-card">
+        <h3>Liên hệ trực tiếp</h3>
+        <dl>
+          <dt>Dịch vụ</dt>
+          <dd>Lắp internet toàn quốc</dd>
+          <dt>Chuyên viên</dt>
+          <dd>Nguyễn Quốc Truyền</dd>
+          <dt>Hotline chính</dt>
+          <dd><a href="tel:+84338303438">0338 30 34 38</a></dd>
+          <dt>Điện thoại / Zalo</dt>
+          <dd><a href="tel:+84971951929">0971 951 929</a> — <a href="https://zalo.me/84971951929" target="_blank" rel="noopener">Zalo</a></dd>
+          <dt>Email</dt>
+          <dd><a href="mailto:truyennq@fpt.com">truyennq@fpt.com</a></dd>
+          <dt>Địa chỉ</dt>
+          <dd>1339 Nguyễn Thị Định, phường Cát Lái, TP. Hồ Chí Minh</dd>
+        </dl>
+      </div>
+
+      <div class="form-card">
+        <h3>Đăng ký tư vấn &amp; lắp đặt</h3>
+        <p class="sub">Để lại thông tin — anh/chị sẽ được gọi lại trong thời gian sớm nhất (trong giờ làm việc).</p>
+        <form id="lead-form" novalidate>
+          <label for="name">Họ và tên</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Nguyễn Văn A" required />
+
+          <label for="phone">Số điện thoại</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx" required />
+
+          <label for="address">Địa chỉ lắp đặt dự kiến</label>
+          <input id="address" name="address" type="text" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh/thành" />
+
+          <label for="note">Ghi chú thêm</label>
+          <textarea id="note" name="note" placeholder="Gói quan tâm, khung giờ liên hệ..."></textarea>
+
+          <p class="form-note">
+            Thông tin hiển thị trên kênh: <strong style="color:var(--text)">Lắp internet toàn quốc</strong> —
+            Hotline <a href="tel:+84338303438">0338 30 34 38</a> —
+            VP: 1339 Nguyễn Thị Định, phường Cát Lái, HCM.
+          </p>
+
+          <button class="btn btn-primary" type="submit" style="width:100%">Gửi đăng ký</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>© FPT Telecom — Kênh kinh doanh của Nguyễn Quốc Truyền. Giá &amp; khuyến mãi có thể thay đổi theo chính sách từng thời điểm; vui lòng xác nhận khi tư vấn.</p>
+    </footer>
+  </div>
+
+  <div class="sticky-cta" role="navigation" aria-label="Thao tác nhanh">
+    <div class="sticky-inner">
+      <a class="btn btn-primary" href="tel:+84971951929">Gọi ngay</a>
+      <a class="btn btn-zalo" href="https://zalo.me/84971951929" target="_blank" rel="noopener noreferrer">Zalo</a>
+      <a class="btn btn-ghost" href="#dang-ky">Đăng ký</a>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      var form = document.getElementById("lead-form");
+      var toast = document.getElementById("toast");
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add("show");
+        setTimeout(function () { toast.classList.remove("show"); }, 4200);
+      }
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var name = document.getElementById("name").value.trim();
+        var phone = document.getElementById("phone").value.trim();
+        if (!name || !phone) {
+          showToast("Vui lòng nhập họ tên và số điện thoại.");
+          return;
+        }
+        var line =
+          "Đăng ký lắp Internet FPT%n" +
+          "Họ tên: " + name + "%n" +
+          "SĐT: " + phone + "%n" +
+          "Địa chỉ: " + document.getElementById("address").value.trim() + "%n" +
+          "Ghi chú: " + document.getElementById("note").value.trim();
+        var body = line.replace(/%n/g, "\n");
+        var mail = "mailto:truyennq@fpt.com?subject=" +
+          encodeURIComponent("[Đăng ký web] Lắp internet — " + name) +
+          "&body=" + encodeURIComponent(body);
+        window.location.href = mail;
+        showToast("Đã mở ứng dụng email. Nếu không thấy, hãy gọi hotline 0338 30 34 38.");
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
