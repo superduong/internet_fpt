@@ -214,6 +214,11 @@
       transition: transform 0.15s, box-shadow 0.15s;
       font-family: inherit;
     }
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
     .btn:active { transform: scale(0.98); }
     .btn-primary {
       background: linear-gradient(135deg, var(--fpt-orange), #ff8533);
@@ -515,6 +520,13 @@
       margin-top: -8px;
       margin-bottom: 16px;
     }
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
 
     footer.site-footer {
       margin-top: 48px;
@@ -725,6 +737,9 @@
         <h3>Đăng ký tư vấn &amp; lắp đặt</h3>
         <p class="sub">Để lại thông tin — anh/chị sẽ được gọi lại trong thời gian sớm nhất (trong giờ làm việc).</p>
         <form id="lead-form" novalidate>
+          <!-- Web3Forms: đăng ký tại https://web3forms.com với email truyennq@fpt.com, dán Access Key vào biến WEB3FORMS_ACCESS_KEY trong &lt;script&gt; cuối trang -->
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
           <label for="name">Họ và tên</label>
           <input id="name" name="name" type="text" autocomplete="name" placeholder="Nguyễn Văn A" required />
 
@@ -737,13 +752,9 @@
           <label for="note">Ghi chú thêm</label>
           <textarea id="note" name="note" placeholder="Gói quan tâm, khung giờ liên hệ..."></textarea>
 
-          <p class="form-note">
-            Thông tin hiển thị trên kênh: <strong style="color:var(--text)">Lắp internet toàn quốc</strong> —
-            Hotline <a href="tel:+84338303438">0338 30 34 38</a> —
-            VP: 1339 Nguyễn Thị Định, phường Cát Lái, HCM.
-          </p>
+          
 
-          <button class="btn btn-primary" type="submit" style="width:100%">Gửi đăng ký</button>
+          <button class="btn btn-primary" id="lead-submit" type="submit" style="width:100%">Gửi đăng ký</button>
         </form>
       </div>
     </section>
@@ -765,35 +776,133 @@
 
   <script>
     (function () {
+      /** Web3Forms: https://web3forms.com — đăng ký bằng truyennq@fpt.com, copy Access Key (UUID) vào đây */
+      var WEB3FORMS_ACCESS_KEY = "a7ed0618-67c0-4f1a-9cce-815a9d72595c";
+
       var form = document.getElementById("lead-form");
       var toast = document.getElementById("toast");
-      function showToast(msg) {
+      var submitBtn = document.getElementById("lead-submit");
+
+      function showToast(msg, isError) {
         toast.textContent = msg;
+        toast.style.background = isError ? "rgba(180, 40, 40, 0.95)" : "rgba(20, 120, 60, 0.95)";
         toast.classList.add("show");
-        setTimeout(function () { toast.classList.remove("show"); }, 4200);
+        setTimeout(function () { toast.classList.remove("show"); }, 5200);
       }
+
+      function buildMessage(name, phone, address, note) {
+        return (
+          "Đăng ký lắp Internet FPT (website)\n" +
+          "—\n" +
+          "Họ tên: " + name + "\n" +
+          "SĐT: " + phone + "\n" +
+          "Địa chỉ lắp đặt: " + (address || "(chưa nhập)") + "\n" +
+          "Ghi chú: " + (note || "(không)") + "\n" +
+          "—\n" +
+          "Dịch vụ: Lắp internet toàn quốc · Nguyễn Quốc Truyền"
+        );
+      }
+
+      function removeFsDynamics() {
+        var nodes = form.querySelectorAll("[data-fs-dynamic]");
+        for (var i = 0; i < nodes.length; i++) nodes[i].remove();
+      }
+
+      function addHidden(name, value) {
+        var i = document.createElement("input");
+        i.type = "hidden";
+        i.name = name;
+        i.value = value;
+        i.setAttribute("data-fs-dynamic", "1");
+        form.appendChild(i);
+      }
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        var name = document.getElementById("name").value.trim();
-        var phone = document.getElementById("phone").value.trim();
-        if (!name || !phone) {
-          showToast("Vui lòng nhập họ tên và số điện thoại.");
+
+        if (form.querySelector('input[name="_honey"]').value) {
           return;
         }
-        var line =
-          "Đăng ký lắp Internet FPT%n" +
-          "Họ tên: " + name + "%n" +
-          "SĐT: " + phone + "%n" +
-          "Địa chỉ: " + document.getElementById("address").value.trim() + "%n" +
-          "Ghi chú: " + document.getElementById("note").value.trim();
-        var body = line.replace(/%n/g, "\n");
-        var mail = "mailto:truyennq@fpt.com?subject=" +
-          encodeURIComponent("[Đăng ký web] Lắp internet — " + name) +
-          "&body=" + encodeURIComponent(body);
-        window.location.href = mail;
-        showToast("Đã mở ứng dụng email. Nếu không thấy, hãy gọi hotline 0338 30 34 38.");
-        form.reset();
+
+        var name = document.getElementById("name").value.trim();
+        var phone = document.getElementById("phone").value.trim();
+        var address = document.getElementById("address").value.trim();
+        var note = document.getElementById("note").value.trim();
+
+        if (!name || !phone) {
+          showToast("Vui lòng nhập họ tên và số điện thoại.", true);
+          return;
+        }
+
+        var key = typeof WEB3FORMS_ACCESS_KEY === "string" ? WEB3FORMS_ACCESS_KEY.trim() : "";
+        var useWeb3 = key.length > 20;
+
+        if (useWeb3) {
+          submitBtn.disabled = true;
+          var prevLabel = submitBtn.textContent;
+          submitBtn.textContent = "Đang gửi…";
+
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({
+              access_key: key,
+              subject: "[Web FPT] Đăng ký tư vấn — " + name,
+              name: name,
+              phone: phone,
+              address: address,
+              message: buildMessage(name, phone, address, note),
+              from_name: name
+            })
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              if (data && data.success) {
+                showToast("Đã gửi thành công. Anh/chị kiểm tra email truyennq@fpt.com (cả mục spam).");
+                form.reset();
+              } else {
+                showToast((data && data.message) || "Gửi thất bại. Vui lòng thử lại hoặc gọi hotline.", true);
+              }
+            })
+            .catch(function () {
+              showToast("Lỗi mạng. Vui lòng thử lại hoặc gọi 0338 30 34 38.", true);
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+              submitBtn.textContent = prevLabel;
+            });
+          return;
+        }
+
+        removeFsDynamics();
+        addHidden("_subject", "[Web FPT] Đăng ký tư vấn — " + name);
+        addHidden("_template", "table");
+        addHidden("_captcha", "false");
+        if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+          try {
+            var u = new URL(window.location.href);
+            u.hash = "";
+            u.searchParams.set("sent", "1");
+            addHidden("_next", u.toString());
+          } catch (err) {
+            /* ignore */
+          }
+        }
+        form.action = "https://formsubmit.co/truyennq@fpt.com";
+        form.method = "POST";
+        form.submit();
       });
+
+      if (window.location.search.indexOf("sent=1") !== -1) {
+        showToast("Đã gửi đơn. Email sẽ tới truyennq@fpt.com (kiểm tra cả spam).");
+        try {
+          var u = new URL(window.location.href);
+          u.searchParams.delete("sent");
+          window.history.replaceState({}, "", u.pathname + u.search + window.location.hash);
+        } catch (e2) {
+          /* ignore */
+        }
+      }
     })();
   </script>
 </body>
